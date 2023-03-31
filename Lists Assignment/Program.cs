@@ -19,14 +19,15 @@
             }
         }
 
-        public static int removeInt, addInt, countOccInt, occurrances = 1;
+        public static int removeInt, addInt, countOccInt, occurrances = 0;
         public static void IntList()
         {
             List<int> randInts = new List<int>();
+            List<int> instances = new List<int>();
             Random generator = new Random();
             string optionSelect;
             bool validRemoveInt = false, validAddInt = false, validFindInt = false;
-            int randIndex;
+            int randIndex, sum, average;
             for (int i = 0; i < 25; i++)
             {
                 randInts.Add(generator.Next(10, 21));
@@ -39,6 +40,7 @@
                     Console.Write(randInts[i]);
                 }
             }
+            Console.WriteLine();
             Console.WriteLine("Now please select an option from the following:");
             Console.WriteLine("1. Sort");
             Console.WriteLine("2. Generate New List");
@@ -138,28 +140,32 @@
                     {
                         Console.WriteLine("Value not in list. Please enter another value:");
                     }
-                    else
+                    else if  (randInts.Contains(countOccInt))
                     {
                         validFindInt = true;
                     }
                 }
-                while (randInts.Contains(countOccInt))
+               for (int i = 1; i < randInts.Count; i++)
                 {
-                    occurrances++;
+                    if (randInts[i] == countOccInt)
+                    {
+                        occurrances++;
+                    }
                 }
                 Console.WriteLine($"List contains {countOccInt} {occurrances} time(s)");
             }
             else if (optionSelect.ToUpper() == "FIND GREATEST" || optionSelect == "6")
             {
-
+                Console.WriteLine($"The maximum value in the list is {randInts.Max()}");
             }
             else if (optionSelect.ToUpper() == "FIND LEAST" || optionSelect == "7")
             {
-
+                Console.WriteLine($"The maximum value in the list is {randInts.Min()}");
             }
             else if (optionSelect.ToUpper() == "CALCULATE SUM AND AVERAGE" || optionSelect == "8")
             {
-
+                Console.WriteLine($"The sum of all list index values is {randInts.Sum()}");
+                Console.WriteLine($"The average index value is {randInts.Average()}");
             }
             else if (optionSelect.ToUpper() == "FIND MOST FREQUENTLY OCCURRING" || optionSelect == "9")
             {
