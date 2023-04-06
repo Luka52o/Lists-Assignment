@@ -183,22 +183,16 @@
 
                 else if (optionSelect.ToUpper() == "FIND MOST FREQUENTLY OCCURRING" || optionSelect == "9")
                 {
-
                     // stores each instance of each element in a list (instances), where the index
                     // for each element value is element - 10; (i.e. 10s: instances[0], 11s: instances[1]
-                    for (int i = 0; i < randInts.Count - 1; i++)
+                    for (int i = 0; i < randInts.Count; i++)
                     {
-                        instances[randInts[i] - 10]++; // exception: index out of range?
+                        instances[randInts[i] - 10]++; // exception: index out of range? index of what? instances?
                     }
-                    //for (int i = 0; i < randInts.Count; i++)
-                    //{
-                    //    Console.WriteLine($"{i + 10}: {instances[i]}");
-
-                    //}
-
-
-
-
+                    for (int i = 0; i < randInts.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 10}: {instances[i]}"); // displays the instance count for each possible randInt element
+                    }
 
 
 
@@ -335,11 +329,13 @@
 
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        public static int indexFound;
         public static void StrList()
         {
             List<string> vegetables = new List<string>();
-            bool done = false;
-            string optionSelect;
+            bool done = false, validRemove = false, vegFound = false;
+            string optionSelect, vegRemove, vegSearch;
             int removeIndex;
             vegetables.Add("CARROT");
             vegetables.Add("BEET");
@@ -382,14 +378,64 @@
                     Console.WriteLine();
                     Console.WriteLine();
                 }
+
                 else if (optionSelect.ToUpper() == "REMOVE BY VALUE" || optionSelect == "2")
                 {
+                    Console.WriteLine("Please enter the vegetable you wish to remove:");
 
+                    while (!validRemove)
+                    {
+                        vegRemove = Console.ReadLine();
+                        if (vegRemove.ToUpper() != vegetables[0] || vegRemove.ToUpper() != vegetables[1] || vegRemove.ToUpper() != vegetables[2] || vegRemove.ToUpper() != vegetables[3])
+                        {
+                            Console.WriteLine("Please enter a valid element within the list");
+                        }
+                        else if (vegRemove.ToUpper() != vegetables[0])
+                        {
+                            vegetables[0].Remove(0);
+                            validRemove = true;
+                        }
+                        else if (vegRemove.ToUpper() != vegetables[1])
+                        {
+                            vegetables[0].Remove(1);
+                            validRemove = true;
+                        }
+                        else if (vegRemove.ToUpper() != vegetables[2])
+                        {
+                            vegetables[0].Remove(2);
+                            validRemove = true;
+                        }
+                        else if (vegRemove.ToUpper() != vegetables[3])
+                        {
+                            vegetables[0].Remove(3);
+                            validRemove = true;
+                        }
+                    }
+                    Console.WriteLine("List with element removed:");
+                    for (int i = 0; i < vegetables.Count; i++)
+                    {
+                        Console.WriteLine($"{vegetables[i]}, ");
+                    }
                 }
+
                 else if (optionSelect.ToUpper() == "SEARCH LIST" || optionSelect == "3")
                 {
-
+                    Console.WriteLine("Please enter the element you wish to find:");
+                    vegSearch = Console.ReadLine();
+                    for (int i = 0; i < vegetables.Count; i++)
+                    {
+                        if (vegSearch.Equals(vegetables[i].ToUpper())) 
+                        {
+                            indexFound = i;
+                        }
+                        Console.Write($"Found! {vegSearch.ToUpper()} is located at index {indexFound}");
+                    }
+                    if (!vegetables.Contains(vegSearch))
+                    {
+                        Console.WriteLine($"Not found! Vegetables does not contain {vegSearch.ToUpper()}");
+                    }
                 }
+
                 else if (optionSelect.ToUpper() == "ADD ELEMENT" || optionSelect == "4")
                 {
 
