@@ -330,13 +330,13 @@
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public static int indexFound;
+        public static int indexFound, removeIndex, addIndex;
+        public static string vegRemove, vegAdd;
         public static void StrList()
         {
             List<string> vegetables = new List<string>();
-            bool done = false, validRemove = false, vegFound = false;
-            string optionSelect, vegRemove, vegSearch;
-            int removeIndex;
+            bool done = false, validRemoveVal = false, validRemoveInd = false, vegFound = false, validAddInd = false, validAddVeg = false;
+            string optionSelect, vegSearch;
             vegetables.Add("CARROT");
             vegetables.Add("BEET");
             vegetables.Add("CELERY");
@@ -360,13 +360,20 @@
                 if (optionSelect.ToUpper() == "REMOVE BY INDEX" || optionSelect == "1")
                 {
                     Console.WriteLine("Please enter the INDEX of the item you wish to remove:");
-                    while (!Int32.TryParse(Console.ReadLine(), out removeIndex))
+                    while (!validRemoveInd)
                     {
-                        Console.WriteLine("Please enter a valid integer value");
-                    }
-                    if (removeIndex < 1 || removeIndex > 5)
-                    {
-                        Console.WriteLine("Please enter an integer within the range of indexes (1 - 5)");
+                        while (!Int32.TryParse(Console.ReadLine(), out removeIndex))
+                        {
+                            Console.WriteLine("Please enter a valid integer value");
+                        }
+                        if (removeIndex < 1 || removeIndex > 5)
+                        {
+                            Console.WriteLine("Please enter an integer within the range of indexes (1 - 5)");
+                        }
+                        else if (removeIndex > 1 && removeIndex <= 5)
+                        {
+                            validRemoveInd = true;
+                        }
                     }
                     vegetables.Remove(vegetables[removeIndex - 1]);
                     Console.WriteLine();
@@ -383,39 +390,28 @@
                 {
                     Console.WriteLine("Please enter the vegetable you wish to remove:");
 
-                    while (!validRemove)
+                    while (!validRemoveVal)
                     {
                         vegRemove = Console.ReadLine();
-                        if (vegRemove.ToUpper() != vegetables[0] || vegRemove.ToUpper() != vegetables[1] || vegRemove.ToUpper() != vegetables[2] || vegRemove.ToUpper() != vegetables[3])
+                        if (vegRemove.ToUpper() != vegetables[0] && vegRemove.ToUpper() != vegetables[1] && vegRemove.ToUpper() != vegetables[2] && vegRemove.ToUpper() != vegetables[3])
                         {
                             Console.WriteLine("Please enter a valid element within the list");
                         }
-                        else if (vegRemove.ToUpper() != vegetables[0])
+                        else
                         {
-                            vegetables[0].Remove(0);
-                            validRemove = true;
-                        }
-                        else if (vegRemove.ToUpper() != vegetables[1])
-                        {
-                            vegetables[0].Remove(1);
-                            validRemove = true;
-                        }
-                        else if (vegRemove.ToUpper() != vegetables[2])
-                        {
-                            vegetables[0].Remove(2);
-                            validRemove = true;
-                        }
-                        else if (vegRemove.ToUpper() != vegetables[3])
-                        {
-                            vegetables[0].Remove(3);
-                            validRemove = true;
+                            validRemoveVal = true;
                         }
                     }
+                    while (vegetables.Remove(vegRemove.ToUpper())) ;
                     Console.WriteLine("List with element removed:");
                     for (int i = 0; i < vegetables.Count; i++)
                     {
-                        Console.WriteLine($"{vegetables[i]}, ");
+                        Console.Write($"{i + 1}: {vegetables[i]}  ");
                     }
+
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
 
                 else if (optionSelect.ToUpper() == "SEARCH LIST" || optionSelect == "3")
@@ -424,21 +420,81 @@
                     vegSearch = Console.ReadLine();
                     for (int i = 0; i < vegetables.Count; i++)
                     {
-                        if (vegSearch.Equals(vegetables[i].ToUpper())) 
+                        if (vegSearch.ToUpper() == (vegetables[i]))
                         {
                             indexFound = i;
+                            vegFound = true;
                         }
-                        Console.Write($"Found! {vegSearch.ToUpper()} is located at index {indexFound}");
                     }
-                    if (!vegetables.Contains(vegSearch))
+                    if (!vegetables.Contains(vegSearch.ToUpper()))
                     {
                         Console.WriteLine($"Not found! Vegetables does not contain {vegSearch.ToUpper()}");
                     }
+                    if (vegFound)
+                    {
+                        Console.Write($"Found! {vegSearch.ToUpper()} is located in slot {indexFound + 1}"); 
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
 
                 else if (optionSelect.ToUpper() == "ADD ELEMENT" || optionSelect == "4")
                 {
-
+                    Console.WriteLine("Please enter the name of the vegetable you wish to add:");
+                    while (!validAddVeg)
+                    {
+                        vegAdd = Console.ReadLine();
+                        for (int i = 0; i < vegetables.Count; i++)
+                        {
+                            if (vegAdd.ToUpper() == vegetables[i])
+                            {
+                                Console.WriteLine($"Vegetable entered already in list: Index #{i}");
+                            }
+                            else
+                            {
+                                validAddVeg = true;
+                            }
+                        }
+                    }
+                    
+                    Console.WriteLine($"Now Please enter the index number you wish to place {vegAdd.ToLower()} in:");
+                    while (!validAddInd)
+                    {
+                        while (!Int32.TryParse(Console.ReadLine(), out addIndex))
+                        {
+                            Console.WriteLine("Please enter a valid integer to be used as a list index.");
+                        }
+                        if (addIndex > vegetables.Count + 1)
+                        {
+                            Console.WriteLine("Please enter a number that is no greater than the current max index + 1");
+                        }
+                        else if (addIndex < 0)
+                        {
+                            Console.WriteLine("Please enter an integer that is greater than or equal to 0");
+                        }
+                        else
+                        {
+                            validAddInd = true;
+                            vegAdd = vegAdd.ToUpper();
+                        }
+                    }
+                    if (addIndex == vegetables.Count + 1)
+                    {
+                        vegetables.Add(vegAdd);
+                    }
+                    else
+                    {
+                        vegetables.Insert(addIndex, vegAdd);
+                    }
+                    Console.WriteLine("New list with added value at specified index:");
+                    for (int i = 0; i < vegetables.Count; i++)
+                    {
+                        Console.Write($"{i + 1}: {vegetables[i]}  ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
                 else if (optionSelect.ToUpper() == "SORT LIST" || optionSelect == "5")
                 {
