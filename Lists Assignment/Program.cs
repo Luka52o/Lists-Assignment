@@ -28,6 +28,10 @@
             string optionSelect;
             bool validRemoveInt = false, validAddInt = false, validFindInt = false, done = false;
             int randIndex;
+
+            for (int i = 0; i <= 10; i++)
+                instances.Add(0);
+
             for (int i = 0; i < 25; i++)    
             {
                 randInts.Add(generator.Next(10, 21));
@@ -184,140 +188,25 @@
                 else if (optionSelect.ToUpper() == "FIND MOST FREQUENTLY OCCURRING" || optionSelect == "9")
                 {
                     // stores each instance of each element in a list (instances), where the index
-                    // for each element value is element - 10; (i.e. 10s: instances[0], 11s: instances[1]
+                    // for each element value is element - 10; (i.e. 10s: instances[0], 11s: instances[1])
                     for (int i = 0; i < randInts.Count; i++)
                     {
-                        instances[randInts[i] - 10]++; // exception: index out of range? index of what? instances?
+                        instances[randInts[i] - 10]++; 
                     }
-                    for (int i = 0; i < randInts.Count; i++)
+                    Console.WriteLine("List of occurrences per number:");
+
+                    for (int i = 0; i < instances.Count; i++)
                     {
-                        Console.WriteLine($"{i + 10}: {instances[i]}"); // displays the instance count for each possible randInt element
+                        if (instances[i] != instances.Max())
+                        {
+                            Console.WriteLine($"{i + 10}: {instances[i]}");
+                        }
+                        else  if (instances[i] == instances.Max())
+                        {
+                            Console.Write($"{i + 10}: {instances[i]} APPEARED THE MOST");
+                            Console.WriteLine();
+                        }
                     }
-
-
-
-                    //// i goes through potential element values
-                    //for (int i = 10; i < 21; i++)
-                    //{
-                    //    // j goes through index numbers
-                    //    for (int j = 0; j < randInts.Count; j++)
-                    //    {
-                    //        //check to see if each element matches i, then goes through a series of if statements to determine what that value is
-                    //        if (randInts[j] == i)
-                    //        {
-                    //            if (i == 10)
-                    //            {
-                    //                // adds to a counter for each element value, these are then compared later
-                    //                occ10++;
-                    //                Console.WriteLine($"i10: {i}");
-                    //                Console.WriteLine($"j10: {j}");
-                    //                // crashes before an element that == i?
-                    //            }
-                    //            else if (i == 11)
-                    //            {
-                    //                occ11++;
-                    //                Console.WriteLine($"i11: {i}");
-                    //                Console.WriteLine($"j11: {j}");
-                    //            }
-                    //            else if (i == 12)
-                    //            {
-                    //                occ12++;
-                    //                Console.WriteLine($"i12: {i}");
-                    //                Console.WriteLine($"j12: {j}");
-                    //            }
-                    //            else if (i == 13)
-                    //            {
-                    //                occ13++;
-                    //                Console.WriteLine($"i13: {i}");
-                    //                Console.WriteLine($"j13: {j}");
-                    //            }
-                    //            else if (i == 14)
-                    //            {
-                    //                occ14++;
-                    //                Console.WriteLine($"i14: {i}");
-                    //                Console.WriteLine($"j14: {j}");
-                    //            }
-                    //            else if (i == 15)
-                    //            {
-                    //                occ15++;
-                    //                Console.WriteLine($"i15: {i}");
-                    //                Console.WriteLine($"j15: {j}");
-                    //            }
-                    //            else if (i == 16)
-                    //            {
-                    //                occ16++;
-                    //                Console.WriteLine($"i16: {i}");
-                    //                Console.WriteLine($"j16: {j}");
-                    //            }
-                    //            else if (i == 17)
-                    //            {
-                    //                occ17++;
-                    //                Console.WriteLine($"i17: {i}");
-                    //                Console.WriteLine($"j17: {j}");
-                    //            }
-                    //            else if (i == 18)
-                    //            {
-                    //                occ18++;
-                    //                Console.WriteLine($"i18: {i}");
-                    //                Console.WriteLine($"j18: {j}");
-                    //            }   
-                    //            else if (i == 19)
-                    //            {
-                    //                occ19++;
-                    //                Console.WriteLine($"i19: {i}");
-                    //                Console.WriteLine($"j19: {j}");
-                    //            }
-                    //            else if (i == 20)
-                    //            {
-                    //                occ20++;
-                    //                Console.WriteLine($"i20: {i}");
-                    //                Console.WriteLine($"j20: {j}");
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    //king = 10;
-                    //if (occ11 > occ10)
-                    //{
-                    //    king = 11;
-                    //}
-                    //if (occ12 > occ10)
-                    //{
-                    //    king = 12;
-                    //}
-                    //if (occ13 > occ10)
-                    //{
-                    //    king = 13;
-                    //}
-                    //if (occ14 > occ10)
-                    //{
-                    //    king = 14;
-                    //}
-                    //if (occ15 > occ10)
-                    //{
-                    //    king = 15;
-                    //}
-                    //if (occ16 > occ10)
-                    //{
-                    //    king = 16;
-                    //}
-                    //if (occ17 > occ10)
-                    //{
-                    //    king = 17;
-                    //}
-                    //if (occ18 > occ10)
-                    //{
-                    //    king = 18;
-                    //}
-                    //if (occ19 > occ10)
-                    //{
-                    //    king = 19;
-                    //}
-                    //if (occ20 > occ10)
-                    //{
-                    //    king = 20;
-                    //}
-                    //Console.WriteLine($"{king} appeared the most in the list");
                 }
 
                 else if (optionSelect.ToUpper() == "EXIT" || optionSelect == "10")
@@ -330,7 +219,7 @@
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public static int indexFound, removeIndex, addIndex;
+        public static int indexFound, removeIndex, addIndex, removeValIndex;
         public static string vegRemove, vegAdd;
         public static void StrList()
         {
@@ -366,11 +255,11 @@
                         {
                             Console.WriteLine("Please enter a valid integer value");
                         }
-                        if (removeIndex < 1 || removeIndex > 5)
+                        if (removeIndex < 1 || removeIndex > vegetables.Count)
                         {
-                            Console.WriteLine("Please enter an integer within the range of indexes (1 - 5)");
+                            Console.WriteLine($"Please enter an integer within the range of indexes (1 - {vegetables.Count})");
                         }
-                        else if (removeIndex > 1 && removeIndex <= 5)
+                        else if (removeIndex > 1 && removeIndex <= vegetables.Count)
                         {
                             validRemoveInd = true;
                         }
@@ -388,18 +277,24 @@
 
                 else if (optionSelect.ToUpper() == "REMOVE BY VALUE" || optionSelect == "2")
                 {
+                    validRemoveVal = false;
                     Console.WriteLine("Please enter the vegetable you wish to remove:");
 
                     while (!validRemoveVal)
                     {
+                        int j = 1;
                         vegRemove = Console.ReadLine();
-                        if (vegRemove.ToUpper() != vegetables[0] && vegRemove.ToUpper() != vegetables[1] && vegRemove.ToUpper() != vegetables[2] && vegRemove.ToUpper() != vegetables[3])
+                        for (int i = 0; i < vegetables.Count; i++)
                         {
-                            Console.WriteLine("Please enter a valid element within the list");
-                        }
-                        else
-                        {
-                            validRemoveVal = true;
+                            if (vegRemove.ToUpper() == vegetables[i])
+                            {
+                                validRemoveVal = true;
+                            }
+                            else if (j == 1 && vegRemove.ToUpper() != vegetables[i])
+                            {
+                                Console.WriteLine("Vegetable not in list. Please try again.");
+                                j++;
+                            }
                         }
                     }
                     while (vegetables.Remove(vegRemove.ToUpper())) ;
@@ -416,6 +311,8 @@
 
                 else if (optionSelect.ToUpper() == "SEARCH LIST" || optionSelect == "3")
                 {
+                    vegSearch = null;
+                    vegFound = false;
                     Console.WriteLine("Please enter the element you wish to find:");
                     vegSearch = Console.ReadLine();
                     for (int i = 0; i < vegetables.Count; i++)
@@ -444,34 +341,38 @@
                     Console.WriteLine("Please enter the name of the vegetable you wish to add:");
                     while (!validAddVeg)
                     {
+                        int j = 0;
                         vegAdd = Console.ReadLine();
                         for (int i = 0; i < vegetables.Count; i++)
                         {
                             if (vegAdd.ToUpper() == vegetables[i])
                             {
-                                Console.WriteLine($"Vegetable entered already in list: Index #{i}");
+                                Console.WriteLine($"Vegetable entered already in list: Slot {i + 1}");
                             }
-                            else
+                            else if (vegAdd.ToUpper() != vegetables[i])
+                            {
+                                j++;
+                            }
+                            if (j == vegetables.Count)
                             {
                                 validAddVeg = true;
                             }
                         }
                     }
-                    
-                    Console.WriteLine($"Now Please enter the index number you wish to place {vegAdd.ToLower()} in:");
+                    Console.WriteLine($"Now Please enter the slot number you wish to place {vegAdd.ToLower()} in:");
                     while (!validAddInd)
                     {
                         while (!Int32.TryParse(Console.ReadLine(), out addIndex))
                         {
-                            Console.WriteLine("Please enter a valid integer to be used as a list index.");
+                            Console.WriteLine("Please enter a valid integer to be used as a list slot.");
                         }
                         if (addIndex > vegetables.Count + 1)
                         {
-                            Console.WriteLine("Please enter a number that is no greater than the current max index + 1");
+                            Console.WriteLine("Please enter a number that is no greater than the current max slot + 1");
                         }
-                        else if (addIndex < 0)
+                        else if (addIndex < 1)
                         {
-                            Console.WriteLine("Please enter an integer that is greater than or equal to 0");
+                            Console.WriteLine("Please enter an integer that is greater than or equal to 1");
                         }
                         else
                         {
@@ -485,7 +386,7 @@
                     }
                     else
                     {
-                        vegetables.Insert(addIndex, vegAdd);
+                        vegetables.Insert(addIndex - 1, vegAdd);
                     }
                     Console.WriteLine("New list with added value at specified index:");
                     for (int i = 0; i < vegetables.Count; i++)
@@ -496,13 +397,29 @@
                     Console.WriteLine();
                     Console.WriteLine();
                 }
+
                 else if (optionSelect.ToUpper() == "SORT LIST" || optionSelect == "5")
                 {
+                    vegetables.Sort();
 
+                    Console.WriteLine("Sorted List:");
+                    for (int i = 0; i < vegetables.Count; i++)
+                    {
+                        Console.Write($"{i + 1}: {vegetables[i]}  ");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
                 else if (optionSelect.ToUpper() == "CLEAR LIST" || optionSelect == "6")
                 {
-
+                    vegetables.Clear();
+                    Console.WriteLine("List Cleared. Press ENTER to exit.");
+                    Console.ReadLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Main();
                 }
             }
         }
